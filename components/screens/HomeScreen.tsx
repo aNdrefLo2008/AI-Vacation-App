@@ -11,11 +11,21 @@ import AntDesign from "@expo/vector-icons/AntDesign"
 
 export default function Index() {
   return (
-    <ScrollView className='flex-1 mt-20 bg-gray-100'>
-      <Text className='text-4xl text-black font-black p-10'>
+    <ScrollView className='flex-1 mt-16 bg-gray-100 mb-20'>
+      <View className='items-center justify-between mx-10 flex-row'>
+        <Text className='font-light text-2xl'>
+          Hi
+          <Text className='font-semibold text-black'> Andrei,</Text>
+        </Text>
+        <Image
+          className='bg-cover rounded-full w-12 h-12'
+          source={require("../../assets/images/Profile Picture.jpg")}
+        />
+      </View>
+      <Text className='text-4xl text-black font-black -mt-3 p-10'>
         Where do you want to go?
       </Text>
-      <View className='flex-row p-6 mx-8 rounded-lg drop-shadow-2xl bg-white justify-between items-center '>
+      <View className='flex-row p-6 mx-8 rounded-lg shadow-2xl shadow-black bg-white justify-between items-center '>
         <View className='flex-row gap-6 items-center'>
           <FontAwesome name='search' size={24} color='black' />
           <TextInput
@@ -51,7 +61,7 @@ export default function Index() {
         contentContainerStyle={{paddingHorizontal: 16}} // Optional padding around items
       >
         <View className='flex-row space-x-4 gap-10'>
-          <View className='drop-shadow-2xl relative justify-center items-center bg-white p-3 rounded-3xl max-w-[262px] h-[262px]'>
+          <View className=' relative justify-center items-center bg-white p-3 rounded-3xl max-w-[262px] h-[262px]'>
             <Image
               className='bg-cover rounded-3xl w-72 h-72 mx-20'
               source={require("../../assets/images/3 Vacation.jpg")}
@@ -83,7 +93,7 @@ export default function Index() {
             </View>
           </View>
 
-          <View className='drop-shadow-2xl relative justify-center items-center bg-white p-3 rounded-3xl max-w-[262px] h-[262px]'>
+          <View className='relative justify-center items-center bg-white p-3 rounded-3xl max-w-[262px] h-[262px]'>
             <Image
               className='bg-cover rounded-3xl w-72 h-72 mx-20'
               source={require("../../assets/images/1 Vacation.jpg")}
