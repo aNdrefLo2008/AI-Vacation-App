@@ -11,7 +11,7 @@ import AntDesign from "@expo/vector-icons/AntDesign"
 
 export default function Index() {
   return (
-    <ScrollView className='flex-1 mt-16 bg-gray-100 mb-20'>
+    <ScrollView className='flex-1 mt-10 bg-gray-100 mb-20'>
       <View className='items-center justify-between mx-10 flex-row'>
         <Text className='font-light text-2xl'>
           Hi
@@ -25,7 +25,7 @@ export default function Index() {
       <Text className='text-4xl text-black font-black -mt-3 p-10'>
         Where do you want to go?
       </Text>
-      <View className='flex-row p-6 mx-8 rounded-lg shadow-2xl shadow-black bg-white justify-between items-center '>
+      <View className='flex-row px-6 py-4 mx-8 rounded-lg shadow-2xl shadow-black bg-white justify-between items-center '>
         <View className='flex-row gap-6 items-center'>
           <FontAwesome name='search' size={24} color='black' />
           <TextInput

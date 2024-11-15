@@ -13,6 +13,7 @@ import {StyleSheet} from "react-native" // Import StyleSheet
 import AiScreen from "../screens/AiScreen"
 import ExpensesScreen from "../screens/ExpensesScreen"
 import AddItenarary from "../screens/AddItenarary"
+import ExpensesStack from "./ExpensesStack"
 
 const Tab = createBottomTabNavigator()
 
@@ -84,7 +85,7 @@ export default function BottomTabNavigator() {
 
       <Tab.Screen
         name='Expenses Tracking'
-        component={ExpensesScreen}
+        component={ExpensesStack} // Use ExpensesStack instead of ExpensesScreen
         options={{
           headerShown: false,
           tabBarIcon: ({color}) => (
