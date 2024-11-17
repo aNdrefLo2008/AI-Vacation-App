@@ -3,17 +3,46 @@
 import "../../global.css"
 
 import React from "react"
-import {
-  View,
-  Text,
-  ScrollView,
-  Image,
-  Button,
-  TouchableOpacity
-} from "react-native"
+import {View, Text, ScrollView, Image, TouchableOpacity} from "react-native"
 import {Ionicons, FontAwesome} from "@expo/vector-icons"
 
 export default function ExpensesScreen({navigation}: {navigation: any}) {
+  const vacation = [
+    {
+      destination: "Maldives",
+      nights: 2,
+      cost: {
+        total: 500,
+        housing: 250,
+        food: 75,
+        partying: 75,
+        activities: 100
+      }
+    },
+    {
+      destination: "Portofino",
+      nights: 14,
+      cost: {
+        total: 3000,
+        housing: 500,
+        food: 1000,
+        partying: 700,
+        activities: 800
+      }
+    },
+    {
+      destination: "Monaco",
+      nights: 12,
+      cost: {
+        total: 2200,
+        housing: 500,
+        food: 200,
+        partying: 300,
+        activities: 1200
+      }
+    }
+  ]
+
   return (
     <ScrollView className='flex-1 mt-10 bg-gray-100 mb-20'>
       <View className='flex-row mx-4 justify-between'>
@@ -60,13 +89,7 @@ export default function ExpensesScreen({navigation}: {navigation: any}) {
         </View>
         <Text className='font-extralight mt-4'>Last 6 Month</Text>
         <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("VacationDetail", {
-              destination: "Maldives",
-              nights: 2,
-              cost: 500
-            })
-          }
+          onPress={() => navigation.navigate("VacationDetail", vacation[0])}
           className='mt-3 border border-gray-200 rounded-3xl p-4 flex-row justify-between items-center'>
           <View className='flex-row gap-3 items-center justify-center'>
             <Image
@@ -84,13 +107,7 @@ export default function ExpensesScreen({navigation}: {navigation: any}) {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("VacationDetail", {
-              destination: "Portofino",
-              nights: 14,
-              cost: 3000
-            })
-          }
+          onPress={() => navigation.navigate("VacationDetail", vacation[1])}
           className=' mt-3 border border-gray-200 rounded-3xl p-3 flex-row justify-between items-center'>
           <View className='flex-row gap-3 items-center justify-center'>
             <Image
@@ -107,21 +124,23 @@ export default function ExpensesScreen({navigation}: {navigation: any}) {
           </View>
         </TouchableOpacity>
         <Text className='font-extralight mt-4'>Last Year</Text>
-        <View className=' mt-3 border border-gray-200 rounded-3xl p-3 flex-row justify-between items-center'>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("VacationDetail", vacation[2])}
+          className=' mt-3 border border-gray-200 rounded-3xl p-3 flex-row justify-between items-center'>
           <View className='flex-row gap-3 items-center justify-center'>
             <Image
               className='bg-cover rounded-full w-16 h-16 shadow-2xl'
               source={require("../../assets/images/3 Vacation.jpg")}
             />
             <View className='flex-col justify-center items-center'>
-              <Text className='font-semibold text-lg'>France</Text>
+              <Text className='font-semibold text-lg'>Monaco</Text>
               <Text className='font-light'>12 Nights</Text>
             </View>
           </View>
           <View>
             <Text className='font-bold text-lg'>$2200</Text>
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   )

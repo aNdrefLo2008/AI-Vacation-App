@@ -10,29 +10,30 @@ const screenWidth = Dimensions.get("window").width
 const halfScreenWidthPadding = screenWidth / 4
 
 export default function VacationDetailScreen({route}: {route: any}) {
+  const {destination, nights, cost} = route.params
+
   const data = [
     {
-      name: "Category A",
-      population: 250,
+      name: "Housing",
+      population: cost.housing,
       color: "#ffffff"
     },
     {
-      name: "Category B",
-      population: 150,
+      name: "Food",
+      population: cost.food,
       color: "#adadad"
     },
     {
-      name: "Category C",
-      population: 100,
+      name: "Partying",
+      population: cost.partying,
       color: "#808080"
     },
     {
-      name: "Category D",
-      population: 450,
+      name: "Fun",
+      population: cost.activities,
       color: "#000000"
     }
   ]
-  const {destination, nights, cost} = route.params
 
   const chartConfig = {
     backgroundColor: "transparent", // Transparent background for the chart itself
@@ -64,31 +65,41 @@ export default function VacationDetailScreen({route}: {route: any}) {
         <Text className='text-gray-500 mt-4 text-lg'>
           Spent on trip to {destination}:
         </Text>
-        <Text className='text-4xl font-bold text-black mt-2'>${cost}</Text>
+        <Text className='text-4xl font-bold text-black mt-2'>
+          ${cost.total}
+        </Text>
       </View>
 
       {/* Spending Categories Section */}
       <View className='flex-row flex-wrap justify-between mx-5 mb-8'>
         {/* Category Boxes */}
         <View className='w-[48%] bg-white p-5 rounded-2xl items-center mb-4'>
-          <Ionicons name='flash' size={24} color='#FFA500' />
-          <Text className='text-xl font-bold text-black mt-2'>$450</Text>
-          <Text className='text-gray-500'>Utilities</Text>
+          <Ionicons name='bed-outline' size={24} color='black' />
+          <Text className='text-xl font-bold text-black mt-2'>
+            ${cost.housing}
+          </Text>
+          <Text className='text-gray-500'>Housing</Text>
         </View>
         <View className='w-[48%] bg-white p-5 rounded-2xl items-center mb-4'>
-          <Ionicons name='cart' size={24} color='#32CD32' />
-          <Text className='text-xl font-bold text-black mt-2'>$150</Text>
-          <Text className='text-gray-500'>Expenses</Text>
+          <Ionicons name='fast-food-outline' size={24} color='black' />
+          <Text className='text-xl font-bold text-black mt-2'>
+            ${cost.food}
+          </Text>
+          <Text className='text-gray-500'>Food</Text>
         </View>
         <View className='w-[48%] bg-white p-5 rounded-2xl items-center mb-4'>
-          <Ionicons name='card' size={24} color='#4682B4' />
-          <Text className='text-xl font-bold text-black mt-2'>$250</Text>
-          <Text className='text-gray-500'>Payments</Text>
+          <Ionicons name='musical-notes-outline' size={24} color='black' />
+          <Text className='text-xl font-bold text-black mt-2'>
+            ${cost.partying}
+          </Text>
+          <Text className='text-gray-500'>Partying</Text>
         </View>
         <View className='w-[48%] bg-white p-5 rounded-2xl items-center mb-4'>
-          <Ionicons name='musical-notes' size={24} color='#FF4500' />
-          <Text className='text-xl font-bold text-black mt-2'>$100</Text>
-          <Text className='text-gray-500'>Subscriptions</Text>
+          <Ionicons name='barbell-outline' size={24} color='black' />
+          <Text className='text-xl font-bold text-black mt-2'>
+            ${cost.activities}
+          </Text>
+          <Text className='text-gray-500'>Activities</Text>
         </View>
       </View>
     </ScrollView>
