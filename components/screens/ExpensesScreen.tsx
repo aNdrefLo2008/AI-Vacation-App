@@ -70,14 +70,18 @@ export default function ExpensesScreen({navigation}: {navigation: any}) {
       </View>
 
       <View className='mx-4 flex-row flex-1 overflow-x-visible items-center justify-center gap-1 mt-10'>
-        <View className='flex-1 flex-row justify-center items-center gap-3 bg-black rounded-2xl py-4'>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("AI", vacation[0])}
+          className='flex-1 flex-row justify-center items-center gap-3 bg-black rounded-2xl py-4'>
           <Text className='text-white text-xl font-semibold'>Pay</Text>
           <Ionicons name='cash' size={18} color={"white"} />
-        </View>
-        <View className='flex-1 flex-row justify-center items-center gap-3 rounded-2xl bg-black py-4'>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("AI", vacation[0])}
+          className='flex-1 flex-row justify-center items-center gap-3 rounded-2xl bg-black py-4'>
           <Text className='text-white text-xl font-semibold'>AI</Text>
           <Ionicons name='hardware-chip' size={18} color={"white"} />
-        </View>
+        </TouchableOpacity>
       </View>
 
       <View className='bg-white pb-6 rounded-3xl shadow-2xl flex-1 mt-10 px-6'>
