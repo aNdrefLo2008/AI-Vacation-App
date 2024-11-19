@@ -45,34 +45,46 @@ export default function AiScreen({route}: {route: any}) {
 
         {/* Action Containers */}
         <View className='mt-8'>
-          <View className='flex-row justify-between mb-4'>
+          <View className='flex-row justify-between mb-4 gap-2'>
             {/* Create a Vacation */}
-            <TouchableOpacity className='bg-white px-4 py-8 rounded-2xl shadow-lg flex-1 mr-2 items-start justify-between'>
-              <Ionicons name='airplane-outline' size={28} color='black' />
-              <Text className='mt-2 text-black text-center text-sm font-medium'>
+            <TouchableOpacity className='bg-white px-4 py-8 rounded-2xl shadow-lg flex-1 ml-2 items-start justify-between'>
+              <View className='p-4 rounded-full bg-black'>
+                <Ionicons name='airplane-outline' size={22} color='white' />
+              </View>
+
+              <Text className='mt-2 text-black font-medium'>
                 Create a Vacation
               </Text>
             </TouchableOpacity>
             {/* Manage My Expenses */}
             <TouchableOpacity className='bg-white px-4 py-8 rounded-2xl shadow-lg flex-1 ml-2 items-start justify-between'>
-              <Ionicons name='wallet-outline' size={28} color='black' />
-              <Text className='mt-2 text-black text-center text-sm font-medium'>
-                Manage My Expenses
+              <View className='p-4 rounded-full bg-black'>
+                <Ionicons name='wallet-outline' size={22} color='white' />
+              </View>
+
+              <Text className='mt-2 text-black font-medium'>
+                Manage Expenses
               </Text>
             </TouchableOpacity>
           </View>
-          <View className='flex-row justify-between'>
+          <View className='flex-row justify-between gap-2'>
             {/* Plan My Itinerary */}
-            <TouchableOpacity className='bg-white px-4 py-8 rounded-2xl shadow-lg flex-1 mr-2 items-start justify-between'>
-              <Ionicons name='map-outline' size={24} color='black' />
-              <Text className='mt-2 text-black text-center text-sm font-medium'>
-                Plan My Itinerary
+            <TouchableOpacity className='bg-white px-4 py-8 rounded-2xl shadow-lg flex-1 ml-2 items-start justify-between'>
+              <View className='p-4 rounded-full bg-black'>
+                <Ionicons name='map-outline' size={22} color='white' />
+              </View>
+
+              <Text className='mt-2 text-black font-medium'>
+                Plan my Itinerary
               </Text>
             </TouchableOpacity>
             {/* Explore Destinations */}
             <TouchableOpacity className='bg-white px-4 py-8 rounded-2xl shadow-lg flex-1 ml-2 items-start justify-between'>
-              <Ionicons name='compass-outline' size={28} color='black' />
-              <Text className='mt-2 text-black text-center text-sm font-medium'>
+              <View className='p-4 rounded-full bg-black'>
+                <Ionicons name='compass-outline' size={24} color='white' />
+              </View>
+
+              <Text className='mt-2 text-black font-medium'>
                 Explore Destinations
               </Text>
             </TouchableOpacity>
@@ -85,7 +97,7 @@ export default function AiScreen({route}: {route: any}) {
 
       {/* Fixed Input Bar */}
       <View
-        className='absolute left-0 right-0 bg-white px-6 py-3 shadow-lg flex-row items-center rounded-full mx-4'
+        className='absolute left-0 right-0 bg-white px-6 py-3 shadow-2xl flex-row items-center rounded-full mx-4'
         style={{bottom: 85}} // Adjust to sit above the tab bar
       >
         <View className='flex-1 bg-gray-100 rounded-full px-4 py-2 flex-row items-center'>

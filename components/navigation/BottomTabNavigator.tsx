@@ -9,7 +9,7 @@ import ProfileScreen from "../screens/ProfileScreen"
 import SettingsScreen from "../screens/SettingsScreen"
 import {Ionicons, FontAwesome} from "@expo/vector-icons"
 import {BlurView} from "expo-blur"
-import {StyleSheet} from "react-native" // Import StyleSheet
+import {Image, StyleSheet} from "react-native" // Import StyleSheet
 import AiScreen from "../screens/AiScreen"
 import ExpensesScreen from "../screens/ExpensesScreen"
 import AddItenarary from "../screens/AddItenarary"
@@ -37,16 +37,17 @@ export default function BottomTabNavigator() {
         }
       }}>
       <Tab.Screen
-        name='Home'
-        component={HomeScreen}
+        name='AI'
+        component={AiScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({color, size}) => (
-            <Ionicons name='home-outline' size={26} color={color} />
+            <Ionicons name='barcode-outline' size={32} color={color} />
           ),
           tabBarLabel: ""
         }}
       />
+
       <Tab.Screen
         name='Discover'
         component={SearchScreen}
@@ -64,22 +65,8 @@ export default function BottomTabNavigator() {
         options={{
           headerShown: false,
           tabBarIcon: ({color, size}) => (
-            <Ionicons name='add-circle' size={36} color='black' />
-          ),
-          tabBarIconStyle: {
-            color: "black"
-          }
-        }}
-      />
-      <Tab.Screen
-        name='AI'
-        component={AiScreen}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({color, size}) => (
-            <Ionicons name='barcode-outline' size={32} color={color} />
-          ),
-          tabBarLabel: ""
+            <Ionicons name='add-circle' size={36} color={color} />
+          )
         }}
       />
 
@@ -90,6 +77,20 @@ export default function BottomTabNavigator() {
           headerShown: false,
           tabBarIcon: ({color}) => (
             <Ionicons name='card-outline' size={30} color={color} />
+          ),
+          tabBarLabel: ""
+        }}
+      />
+      <Tab.Screen
+        name='Profile'
+        component={HomeScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color, size}) => (
+            <Image
+              className='bg-cover rounded-full w-8 h-8'
+              source={require("../../assets/images/Profile Picture.jpg")}
+            />
           ),
           tabBarLabel: ""
         }}
