@@ -8,7 +8,20 @@ module.exports = {
   ],
   presets: [require("nativewind/preset")], // NativeWind preset to support Tailwind in React Native
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["WorkSans_Regular", "sans-serif"], // Default font
+        thin: ["WorkSans_Thin", "sans-serif"],
+        extralight: ["WorkSans_ExtraLight", "sans-serif"],
+        light: ["WorkSans_Light", "sans-serif"],
+        regular: ["WorkSans_Regular", "sans-serif"],
+        medium: ["WorkSans_Medium", "sans-serif"],
+        semibold: ["WorkSans_SemiBold", "sans-serif"],
+        bold: ["WorkSans_Bold", "sans-serif"],
+        extrabold: ["WorkSans_ExtraBold", "sans-serif"],
+        black: ["WorkSans_Black", "sans-serif"],
+      },
+    },
   },
   plugins: [],
 };

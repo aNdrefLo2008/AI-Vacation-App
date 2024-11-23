@@ -73,23 +73,21 @@ export default function ExpensesScreen({navigation}: {navigation: any}) {
         <TouchableOpacity
           onPress={() => navigation.navigate("AI", vacation[0])}
           className='flex-1 flex-row justify-center items-center gap-3 bg-black rounded-2xl py-4'>
-          <Text className='text-white text-xl font-semibold'>Pay</Text>
+          <Text className='text-white text-xl font-bold'>Pay</Text>
           <Ionicons name='cash' size={18} color={"white"} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("AI", vacation[0])}
           className='flex-1 flex-row justify-center items-center gap-3 rounded-2xl bg-black py-4'>
-          <Text className='text-white text-xl font-semibold'>AI</Text>
+          <Text className='text-white text-xl font-bold'>AI</Text>
           <Ionicons name='hardware-chip' size={18} color={"white"} />
         </TouchableOpacity>
       </View>
 
       <View className='bg-white pb-6 rounded-3xl shadow-2xl flex-1 mt-10 px-6'>
         <View className='flex-row justify-between items-center pt-8'>
-          <Text className='text-lg font-semibold'>Vacations</Text>
-          <Text className='text-lg font-semibold text-indigo-600'>
-            View All
-          </Text>
+          <Text className='text-lg font-bold'>Vacations</Text>
+          <Text className='text-lg font-bold text-indigo-600'>View All</Text>
         </View>
         <Text className='font-extralight mt-4'>Last 6 Month</Text>
         <TouchableOpacity
@@ -101,8 +99,8 @@ export default function ExpensesScreen({navigation}: {navigation: any}) {
               source={require("../../assets/images/2 Vacation.jpg")}
             />
             <View>
-              <Text className='font-semibold text-lg'>Maldives</Text>
-              <Text className='font-light'>2 Nights</Text>
+              <Text className='font-bold text-lg'>Maldives</Text>
+              <Text className='font-thin'>2 Nights</Text>
             </View>
           </View>
           <View>
@@ -119,7 +117,7 @@ export default function ExpensesScreen({navigation}: {navigation: any}) {
               source={require("../../assets/images/1 Vacation.jpg")}
             />
             <View className='flex-col justify-center items-center'>
-              <Text className='font-semibold text-lg'>Portofino</Text>
+              <Text className='font-bold text-lg'>Portofino</Text>
               <Text className='font-light'>14 Nights</Text>
             </View>
           </View>
@@ -137,7 +135,7 @@ export default function ExpensesScreen({navigation}: {navigation: any}) {
               source={require("../../assets/images/3 Vacation.jpg")}
             />
             <View className='flex-col justify-center items-center'>
-              <Text className='font-semibold text-lg'>Monaco</Text>
+              <Text className='font-bold text-lg'>Monaco</Text>
               <Text className='font-light'>12 Nights</Text>
             </View>
           </View>

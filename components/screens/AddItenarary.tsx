@@ -89,10 +89,10 @@ export default function AddItenarary() {
 
       {/* Button Section */}
       <TouchableOpacity
-        className='absolute gap-2 left-0 right-0 bg-white p-6 justify-center shadow-2xl flex-row items-center rounded-3xl mx-4'
+        className='absolute gap-2 left-0 right-0 bg-gray-800 p-6 justify-center shadow-2xl flex-row items-center rounded-3xl mx-4'
         style={{bottom: 85}} // Adjust to sit above the tab bar
       >
-        <Text className='font-semibold text-4xl'>Prepare Now</Text>
+        <Text className='font-bold text-white text-3xl'>Prepare Now</Text>
       </TouchableOpacity>
     </View>
   )
