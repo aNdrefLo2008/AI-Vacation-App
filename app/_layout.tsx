@@ -9,15 +9,13 @@ const Stack = createStackNavigator()
 
 function HomeStack() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name='home'
-          component={BottomTabNavigator}
-          options={{headerShown: false}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen
+        name='home'
+        component={BottomTabNavigator}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
   )
 }
 

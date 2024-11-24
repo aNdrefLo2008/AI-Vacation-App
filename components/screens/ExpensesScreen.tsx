@@ -46,13 +46,15 @@ export default function ExpensesScreen({navigation}: {navigation: any}) {
   return (
     <ScrollView className='flex-1 mt-10 bg-gray-100 mb-20'>
       <View className='flex-row mx-4 justify-between'>
-        <View className='flex-row gap-4 justify-center items-center'>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Profile", {})}
+          className='flex-row gap-4 justify-center items-center'>
           <Image
             className='bg-cover rounded-full w-12 h-12'
             source={require("../../assets/images/Profile Picture.jpg")}
           />
           <Text className='font-bold text-lg'>Andrei Florea</Text>
-        </View>
+        </TouchableOpacity>
         <View className='flex-row gap-3 justify-center items-center'>
           <View className=' justify-center items-center bg-white p-3 shadow-2xl rounded-full'>
             <Ionicons name='settings-outline' size={20} color={"black"} />
@@ -72,14 +74,10 @@ export default function ExpensesScreen({navigation}: {navigation: any}) {
       <View className='mx-4 flex-row flex-1 overflow-x-visible items-center justify-center gap-1 mt-10'>
         <TouchableOpacity
           onPress={() => navigation.navigate("AI", vacation[0])}
-          className='flex-1 flex-row justify-center items-center gap-3 bg-black rounded-2xl py-4'>
-          <Text className='text-white text-xl font-bold'>Pay</Text>
-          <Ionicons name='cash' size={18} color={"white"} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("AI", vacation[0])}
           className='flex-1 flex-row justify-center items-center gap-3 rounded-2xl bg-black py-4'>
-          <Text className='text-white text-xl font-bold'>AI</Text>
+          <Text className='text-white text-xl font-bold'>
+            How to save on vacation
+          </Text>
           <Ionicons name='hardware-chip' size={18} color={"white"} />
         </TouchableOpacity>
       </View>

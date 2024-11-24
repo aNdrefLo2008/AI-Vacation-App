@@ -3,206 +3,134 @@
 import {Ionicons} from "@expo/vector-icons"
 import "../../global.css"
 
-import React, {useState, useRef} from "react"
+import React, {useState} from "react"
 import {
   View,
   Text,
+  ScrollView,
   Image,
   TouchableOpacity,
-  ScrollView,
-  Animated,
-  TouchableWithoutFeedback
+  TextInput
 } from "react-native"
+import * as ImagePicker from "expo-image-picker" // Import the image picker
 
-const CustomSwitch = ({
-  value,
-  onValueChange
-}: {
-  value: any
-  onValueChange: any
-}) => {
-  const animation = useRef(new Animated.Value(value ? 1 : 0)).current
+export default function AddItenarary() {
+  const [image, setImage] = useState<string | null>(null) // Explicitly set state type
+  // State to hold the selected image
 
-  const toggleSwitch = () => {
-    Animated.timing(animation, {
-      toValue: value ? 0 : 1,
-      duration: 350,
-      useNativeDriver: false
-    }).start(() => onValueChange(!value))
+  // Function to open the gallery and pick an image
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images, // Allow only images
+      allowsEditing: true, // Optionally allow editing (cropping)
+      aspect: [1, 1], // Aspect ratio for cropping (optional)
+      quality: 1 // Quality of the image
+    })
+
+    if (result && result.assets && result.assets.length > 0) {
+      // Check if the result contains assets and select the first image
+      setImage(result.assets[0].uri) // Set the selected image URI
+    }
   }
 
-  const translateX = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [2, 22] // Adjust padding/movement
-  })
-
-  const backgroundColor = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["#d3d3d3", "#000000"] // Gray shades for background
-  })
-
   return (
-    <TouchableWithoutFeedback onPress={toggleSwitch}>
-      <Animated.View
-        style={{
-          width: 50,
-          height: 26, // Slightly increased height for more padding
-          borderRadius: 13, // Half of the new height for proper rounding
-          backgroundColor: backgroundColor,
-          justifyContent: "center",
-          paddingVertical: 6, // Increased vertical padding
-          paddingHorizontal: 4 // Retaining horizontal padding
-        }}>
-        <Animated.View
-          style={{
-            width: 20,
-            height: 20,
-            borderRadius: 10,
-            backgroundColor: "#ffffff", // White ball
-            transform: [{translateX}]
-          }}
-        />
-      </Animated.View>
-    </TouchableWithoutFeedback>
-  )
-}
+    <View className='flex-1 bg-gray-100 relative pb-52'>
+      {/* Scrollable Content */}
+      <ScrollView
+        className='mx-6 mt-10 flex-1'
+        showsVerticalScrollIndicator={false}>
+        {/* Header Section */}
 
-export default function ProfileSettingsScreen({navigation}: {navigation: any}) {
-  const [notificationsEnabled, setNotificationsEnabled] = useState(false)
-  const [darkThemeEnabled, setDarkThemeEnabled] = useState(false)
+        {/* Form Section */}
+        <View className='flex-1 gap-4'>
+          {/* Full Name Input */}
+          <View className='mt-4'>
+            <Text className='text-lg font-light text-left mb-2'>Full Name</Text>
+            <TextInput
+              className='text-base text-black bg-white rounded-lg p-4 shadow-lg'
+              placeholder='Enter your full name...'
+              placeholderTextColor='#A8A8A8'
+              selectionColor='black'
+            />
+          </View>
 
-  return (
-    <ScrollView className='flex-1 bg-gray-100'>
-      <View className='flex-1 items-center'>
-        <Image
-          className='bg-cover rounded-full w-24 h-24 mt-16'
-          source={require("../../assets/images/Profile Picture.jpg")}
-        />
-        <Text className='text-3xl font-bold mt-5'>Andrei Florea</Text>
-        <Text className='text-base mt-2 text-gray-500'>
-          andreiflorea@gmail.com
-        </Text>
-        <TouchableOpacity className='bg-gray-950 p-4 mt-6 rounded-full'>
-          <Text className='font-light text-lg text-white'>Edit Profile</Text>
-        </TouchableOpacity>
-      </View>
+          {/* Profile Picture Input */}
+          <View className='mt-4'>
+            <Text className='text-lg font-light text-left mb-2'>
+              Profile Picture
+            </Text>
+            <TouchableOpacity
+              onPress={pickImage} // Trigger the image picker when the user presses
+              className='bg-white rounded-lg p-4 shadow-lg'>
+              <Text className='text-base text-black text-center'>
+                {image ? "Change Picture" : "Select a Picture"}
+              </Text>
+            </TouchableOpacity>
 
-      <View className='flex-1 items-start justify-start pb-28 mt-12 bg-white rounded-3xl p-6'>
-        <Text className='text-gray-400 text-xl'>Content</Text>
-        <TouchableOpacity className='flex-row items-start mt-8 justify-between w-full'>
-          <View className='flex-row justify-start gap-6 items-center'>
-            <Ionicons
-              name='add-outline'
-              color={"black"}
-              size={20}
-              className='bg-gray-100 p-4 rounded-full'
-            />
-            <Text className='text-xl'>Favorites</Text>
+            {/* Display selected image */}
+            <View className=' justify-center items-center my-6'>
+              {image && (
+                <Image
+                  source={{uri: image}}
+                  style={{
+                    width: 100,
+                    height: 100,
+                    borderRadius: 50,
+                    marginTop: 10
+                  }}
+                />
+              )}
+            </View>
           </View>
-          <Ionicons
-            name='chevron-forward-outline'
-            color={"gray"}
-            className='mt-3'
-            size={22}></Ionicons>
-        </TouchableOpacity>
-        <TouchableOpacity className='flex-row items-start mt-10 justify-between w-full'>
-          <View className='flex-row justify-start gap-6 items-center'>
-            <Ionicons
-              name='cloud-download-outline'
-              color={"black"}
-              size={20}
-              className='bg-gray-100 p-4 rounded-full'
+
+          {/* Description Input */}
+          <View>
+            <Text className='text-lg font-light text-left mb-2'>
+              Description
+            </Text>
+            <TextInput
+              className='text-xl text-black bg-white rounded-2xl p-6 h-36 shadow-lg'
+              placeholder='Write your new description here...'
+              placeholderTextColor='#A8A8A8'
+              selectionColor='black'
+              multiline
             />
-            <Text className='text-xl'>Downloads</Text>
           </View>
-          <Ionicons
-            name='chevron-forward-outline'
-            color={"gray"}
-            className='mt-3'
-            size={22}></Ionicons>
-        </TouchableOpacity>
-        <Text className='text-gray-400 text-xl mt-12'>Preferences</Text>
-        <TouchableOpacity className='flex-row items-start mt-8 justify-between w-full'>
-          <View className='flex-row justify-start gap-6 items-center'>
-            <Ionicons
-              name='language-outline'
-              color={"black"}
-              size={20}
-              className='bg-gray-100 p-4 rounded-full'
-            />
-            <Text className='text-xl'>Language</Text>
+
+          {/* Age and Gender Inputs side by side */}
+          <View className='flex-row justify-between'>
+            {/* Age Input */}
+            <View className='w-1/2 pr-2'>
+              <Text className='text-lg font-light text-left mb-2'>Age</Text>
+              <TextInput
+                className='text-base text-black bg-white rounded-lg p-4 shadow-lg'
+                placeholder='Enter your age'
+                placeholderTextColor='#A8A8A8'
+                selectionColor='black'
+              />
+            </View>
+
+            {/* Gender Input */}
+            <View className='w-1/2 pl-2'>
+              <Text className='text-lg font-light text-left mb-2'>Gender</Text>
+              <TextInput
+                className='text-base text-black bg-white rounded-lg p-4 shadow-lg'
+                placeholder='Enter your gender'
+                placeholderTextColor='#A8A8A8'
+                selectionColor='black'
+              />
+            </View>
           </View>
-          <Ionicons
-            name='chevron-forward-outline'
-            color={"gray"}
-            className='mt-3'
-            size={22}></Ionicons>
-        </TouchableOpacity>
-        {/* Notifications */}
-        <View className='flex-row items-center mt-10 justify-between w-full'>
-          <View className='flex-row justify-start gap-6 items-center'>
-            <Ionicons
-              name='notifications-outline'
-              color={"black"}
-              size={20}
-              className='bg-gray-100 p-4 rounded-full'
-            />
-            <Text className='text-xl'>Notifications</Text>
-          </View>
-          <CustomSwitch
-            value={notificationsEnabled}
-            onValueChange={setNotificationsEnabled}
-          />
         </View>
-        {/* Theme */}
-        <View className='flex-row items-center mt-10 justify-between w-full'>
-          <View className='flex-row justify-start gap-6 items-center'>
-            <Ionicons
-              name='moon-outline'
-              color={"black"}
-              size={20}
-              className='bg-gray-100 p-4 rounded-full'
-            />
-            <Text className='text-xl'>Theme</Text>
-          </View>
-          <CustomSwitch
-            value={darkThemeEnabled}
-            onValueChange={setDarkThemeEnabled}
-          />
-        </View>
-        <TouchableOpacity className='flex-row items-start mt-10 justify-between w-full'>
-          <View className='flex-row justify-start gap-6 items-center'>
-            <Ionicons
-              name='key-outline'
-              color={"black"}
-              size={20}
-              className='bg-gray-100 p-4 rounded-full'
-            />
-            <Text className='text-xl'>Change Accounts</Text>
-          </View>
-          <Ionicons
-            name='chevron-forward-outline'
-            color={"gray"}
-            className='mt-3'
-            size={22}></Ionicons>
-        </TouchableOpacity>
-        <TouchableOpacity className='flex-row items-start mt-10 justify-between w-full'>
-          <View className='flex-row justify-start gap-6 items-center'>
-            <Ionicons
-              name='log-out-outline'
-              color={"white"}
-              size={20}
-              className='bg-red-600 pl-5 p-4 rounded-full'
-            />
-            <Text className='text-xl'>Logout</Text>
-          </View>
-          <Ionicons
-            name='chevron-forward-outline'
-            color={"gray"}
-            size={22}
-            className='mt-3'></Ionicons>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+      </ScrollView>
+
+      {/* Button Section */}
+      <TouchableOpacity
+        className='absolute gap-2 left-0 right-0 bg-gray-800 p-6 justify-center shadow-2xl flex-row items-center rounded-3xl mx-4'
+        style={{bottom: 85}} // Adjust to sit above the tab bar
+      >
+        <Text className='font-bold text-white text-3xl'>Change Now</Text>
+      </TouchableOpacity>
+    </View>
   )
 }

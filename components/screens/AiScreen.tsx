@@ -14,18 +14,20 @@ import {
   TextInput
 } from "react-native"
 
-export default function AiScreen({route}: {route: any}) {
+export default function AiScreen({navigation}: {navigation: any}) {
   return (
     <View className='flex-1 bg-gray-100 relative'>
       {/* Scrollable Content */}
       <ScrollView className='mt-10 mx-6 flex-1'>
         <View className='flex-row justify-between'>
-          <View className='flex-row gap-4 items-center'>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Profile", {})}
+            className='flex-row gap-4 items-center'>
             <Image
               className='bg-cover rounded-full w-14 h-14'
               source={require("../../assets/images/Profile Picture.jpg")}
             />
-          </View>
+          </TouchableOpacity>
           <View className='flex-row gap-3 items-center'>
             <View className='bg-white p-3 shadow-2xl rounded-full items-center justify-center'>
               <Ionicons name='settings-outline' size={20} color='black' />

@@ -99,7 +99,7 @@ export default function SettingsScreen({navigation}: {navigation: any}) {
               size={20}
               className='bg-gray-100 p-4 rounded-full'
             />
-            <Text className='text-xl'>Favorites</Text>
+            <Text className='text-xl font-bold'>Favorites</Text>
           </View>
           <Ionicons
             name='chevron-forward-outline'
@@ -115,7 +115,7 @@ export default function SettingsScreen({navigation}: {navigation: any}) {
               size={20}
               className='bg-gray-100 p-4 rounded-full'
             />
-            <Text className='text-xl'>Downloads</Text>
+            <Text className='text-xl font-bold'>Downloads</Text>
           </View>
           <Ionicons
             name='chevron-forward-outline'
@@ -132,7 +132,7 @@ export default function SettingsScreen({navigation}: {navigation: any}) {
               size={20}
               className='bg-gray-100 p-4 rounded-full'
             />
-            <Text className='text-xl'>Language</Text>
+            <Text className='text-xl font-bold'>Language</Text>
           </View>
           <Ionicons
             name='chevron-forward-outline'
@@ -149,7 +149,7 @@ export default function SettingsScreen({navigation}: {navigation: any}) {
               size={20}
               className='bg-gray-100 p-4 rounded-full'
             />
-            <Text className='text-xl'>Notifications</Text>
+            <Text className='text-xl font-bold'>Notifications</Text>
           </View>
           <CustomSwitch
             value={notificationsEnabled}
@@ -160,12 +160,12 @@ export default function SettingsScreen({navigation}: {navigation: any}) {
         <View className='flex-row items-center mt-10 justify-between w-full'>
           <View className='flex-row justify-start gap-6 items-center'>
             <Ionicons
-              name='moon-outline'
+              name='contrast-outline'
               color={"black"}
               size={20}
               className='bg-gray-100 p-4 rounded-full'
             />
-            <Text className='text-xl'>Theme</Text>
+            <Text className='text-xl font-bold'>Dark mode</Text>
           </View>
           <CustomSwitch
             value={darkThemeEnabled}
@@ -180,7 +180,7 @@ export default function SettingsScreen({navigation}: {navigation: any}) {
               size={20}
               className='bg-gray-100 p-4 rounded-full'
             />
-            <Text className='text-xl'>Change Accounts</Text>
+            <Text className='text-xl font-bold'>Change Accounts</Text>
           </View>
           <Ionicons
             name='chevron-forward-outline'
@@ -196,7 +196,7 @@ export default function SettingsScreen({navigation}: {navigation: any}) {
               size={20}
               className='bg-red-600 pl-5 p-4 rounded-full'
             />
-            <Text className='text-xl'>Logout</Text>
+            <Text className='text-xl font-bold'>Logout</Text>
           </View>
           <Ionicons
             name='chevron-forward-outline'

@@ -13,14 +13,16 @@ import {
   TextInput
 } from "react-native"
 
-export default function AddItenarary() {
+export default function AddItenarary({navigation}: {navigation: any}) {
   return (
     <View className='flex-1 bg-gray-100 relative'>
       {/* Scrollable Content */}
       <ScrollView className='mt-10 mx-6 flex-1'>
         {/* Header Section */}
         <View className='flex-row justify-between'>
-          <TouchableOpacity className='flex-row gap-4 items-center'>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Profile", {})}
+            className='flex-row gap-4 items-center'>
             <Image
               className='bg-cover rounded-full w-14 h-14'
               source={require("../../assets/images/Profile Picture.jpg")}

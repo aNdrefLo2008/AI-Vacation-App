@@ -3,15 +3,14 @@ import "../../global.css"
 /** @format */
 import React from "react"
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs"
-import SearchScreen from "../screens/DiscoverScreen"
-import {Ionicons, FontAwesome} from "@expo/vector-icons"
-import {BlurView} from "expo-blur"
-import {Image, StyleSheet} from "react-native" // Import StyleSheet
+import {Ionicons} from "@expo/vector-icons"
+import {Image, StyleSheet} from "react-native"
 import AiScreen from "../screens/AiScreen"
 import ExpensesScreen from "../screens/ExpensesScreen"
 import AddItenarary from "../screens/AddItenarary"
 import ExpensesStack from "./ExpensesStack"
 import ProfileStack from "./ProfileSettingsStack"
+import DiscoverScreen from "../screens/DiscoverScreen"
 
 const Tab = createBottomTabNavigator()
 
@@ -23,15 +22,18 @@ export default function BottomTabNavigator() {
         tabBarInactiveTintColor: "gray",
         tabBarStyle: {
           position: "absolute",
-          paddingBottom: 5,
           height: 70,
-          borderTopLeftRadius: 40, // Add rounded corners if desired
-          borderTopRightRadius: 40
+          borderTopLeftRadius: 40,
+          borderTopRightRadius: 40,
+          backgroundColor: "white",
+          paddingHorizontal: 10,
+          paddingTop: 10,
+          justifyContent: "center",
+          alignItems: "center"
         },
         tabBarLabelStyle: {
-          fontSize: 12, // Adjust font size if needed
-          marginTop: -10, // Moves label closer to the icon
-          fontWeight: 700
+          fontSize: 10,
+          fontWeight: "600"
         }
       }}>
       <Tab.Screen
@@ -39,20 +41,29 @@ export default function BottomTabNavigator() {
         component={AiScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({color, size}) => (
-            <Ionicons name='barcode-outline' size={32} color={color} />
+          tabBarIcon: ({color, focused}) => (
+            <Ionicons
+              name='barcode-outline'
+              size={30}
+              color={color}
+              style={{}}
+            />
           ),
           tabBarLabel: ""
         }}
       />
-
       <Tab.Screen
         name='Discover'
-        component={SearchScreen}
+        component={DiscoverScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({color}) => (
-            <Ionicons name='compass-outline' size={32} color={color} />
+          tabBarIcon: ({color, focused}) => (
+            <Ionicons
+              name='compass-outline'
+              size={30}
+              color={color}
+              style={{}}
+            />
           ),
           tabBarLabel: ""
         }}
@@ -62,19 +73,27 @@ export default function BottomTabNavigator() {
         component={AddItenarary}
         options={{
           headerShown: false,
-          tabBarIcon: ({color, size}) => (
-            <Ionicons name='add-circle' size={36} color={color} />
-          )
+          tabBarIcon: ({color}) => (
+            <Ionicons
+              name='add-circle'
+              size={32}
+              color={color}
+              style={{
+                position: "absolute",
+                top: -1
+              }}
+            />
+          ),
+          tabBarLabel: ""
         }}
       />
-
       <Tab.Screen
         name='Expenses Tracking'
-        component={ExpensesStack} // Use ExpensesStack instead of ExpensesScreen
+        component={ExpensesStack}
         options={{
           headerShown: false,
-          tabBarIcon: ({color}) => (
-            <Ionicons name='card-outline' size={30} color={color} />
+          tabBarIcon: ({color, focused}) => (
+            <Ionicons name='card-outline' size={28} color={color} style={{}} />
           ),
           tabBarLabel: ""
         }}
@@ -84,10 +103,15 @@ export default function BottomTabNavigator() {
         component={ProfileStack}
         options={{
           headerShown: false,
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: () => (
             <Image
-              className='bg-cover rounded-full w-8 h-8'
               source={require("../../assets/images/Profile Picture.jpg")}
+              style={{
+                width: 30,
+                height: 30,
+                borderRadius: 16,
+                resizeMode: "cover"
+              }}
             />
           ),
           tabBarLabel: ""

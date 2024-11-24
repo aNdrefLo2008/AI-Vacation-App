@@ -2,14 +2,21 @@
 
 import "../../global.css"
 
-import {ScrollView, Text, View, Image, TextInput} from "react-native"
+import {
+  ScrollView,
+  Text,
+  View,
+  Image,
+  TextInput,
+  TouchableOpacity
+} from "react-native"
 import {BlurView} from "expo-blur"
 import FontAwesome from "@expo/vector-icons/FontAwesome"
 import Ionicons from "@expo/vector-icons/Ionicons"
 import Feather from "@expo/vector-icons/Feather"
 import AntDesign from "@expo/vector-icons/AntDesign"
 
-export default function Index() {
+export default function DiscoverScreen({navigation}: {navigation: any}) {
   return (
     <ScrollView className='flex-1 mt-10 bg-gray-100 mb-20'>
       <View className='items-center justify-between mx-10 flex-row'>
@@ -17,10 +24,12 @@ export default function Index() {
           Hi
           <Text className='font-semibold text-black'> Andrei,</Text>
         </Text>
-        <Image
-          className='bg-cover rounded-full w-12 h-12'
-          source={require("../../assets/images/Profile Picture.jpg")}
-        />
+        <TouchableOpacity onPress={() => navigation.navigate("Profile", {})}>
+          <Image
+            className='bg-cover rounded-full w-12 h-12'
+            source={require("../../assets/images/Profile Picture.jpg")}
+          />
+        </TouchableOpacity>
       </View>
       <Text className='text-4xl text-black font-black -mt-3 p-10'>
         Where do you want to go?
