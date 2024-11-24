@@ -3,10 +3,7 @@ import "../../global.css"
 /** @format */
 import React from "react"
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs"
-import HomeScreen from "../screens/HomeScreen"
 import SearchScreen from "../screens/DiscoverScreen"
-import ProfileScreen from "../screens/ProfileScreen"
-import SettingsScreen from "../screens/SettingsScreen"
 import {Ionicons, FontAwesome} from "@expo/vector-icons"
 import {BlurView} from "expo-blur"
 import {Image, StyleSheet} from "react-native" // Import StyleSheet
@@ -14,6 +11,7 @@ import AiScreen from "../screens/AiScreen"
 import ExpensesScreen from "../screens/ExpensesScreen"
 import AddItenarary from "../screens/AddItenarary"
 import ExpensesStack from "./ExpensesStack"
+import ProfileStack from "./ProfileSettingsStack"
 
 const Tab = createBottomTabNavigator()
 
@@ -83,7 +81,7 @@ export default function BottomTabNavigator() {
       />
       <Tab.Screen
         name='Profile'
-        component={HomeScreen}
+        component={ProfileStack}
         options={{
           headerShown: false,
           tabBarIcon: ({color, size}) => (

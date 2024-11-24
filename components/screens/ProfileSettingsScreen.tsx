@@ -67,7 +67,7 @@ const CustomSwitch = ({
   )
 }
 
-export default function SettingsScreen({navigation}: {navigation: any}) {
+export default function ProfileSettingsScreen({navigation}: {navigation: any}) {
   const [notificationsEnabled, setNotificationsEnabled] = useState(false)
   const [darkThemeEnabled, setDarkThemeEnabled] = useState(false)
 
@@ -82,9 +82,7 @@ export default function SettingsScreen({navigation}: {navigation: any}) {
         <Text className='text-base mt-2 text-gray-500'>
           andreiflorea@gmail.com
         </Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Specific Profile Settings", {})}
-          className='bg-gray-950 p-4 mt-6 rounded-full'>
+        <TouchableOpacity className='bg-gray-950 p-4 mt-6 rounded-full'>
           <Text className='font-light text-lg text-white'>Edit Profile</Text>
         </TouchableOpacity>
       </View>
@@ -94,7 +92,7 @@ export default function SettingsScreen({navigation}: {navigation: any}) {
         <TouchableOpacity className='flex-row items-start mt-8 justify-between w-full'>
           <View className='flex-row justify-start gap-6 items-center'>
             <Ionicons
-              name='bookmarks-outline'
+              name='add-outline'
               color={"black"}
               size={20}
               className='bg-gray-100 p-4 rounded-full'
