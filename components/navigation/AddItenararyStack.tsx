@@ -2,29 +2,23 @@
 
 import React from "react"
 import {createStackNavigator} from "@react-navigation/stack"
-import ExpensesScreen from "../screens/ExpensesScreen"
-import VacationDetailScreen from "../screens/VacationDetailScreen"
 import SettingsScreen from "../screens/SettingsScreen"
+import AddItenarary from "../screens/AddItenarary"
 
 const Stack = createStackNavigator()
 
-export default function ExpensesStack() {
+export default function AddItenararyStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name='ExpensesHome'
-        component={ExpensesScreen}
+        name='AddItenarary'
+        component={AddItenarary}
         options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name='VacationDetail'
-        component={VacationDetailScreen}
-        options={{title: "Vacation Details"}}
       />
       <Stack.Screen
         name='Settings'
         component={SettingsScreen}
-        options={{title: "Settings"}}
+        options={{title: "Vacation Details"}}
       />
     </Stack.Navigator>
   )

@@ -5,6 +5,7 @@ import "../../global.css"
 import React from "react"
 import {View, Text, ScrollView, Image, TouchableOpacity} from "react-native"
 import {Ionicons, FontAwesome} from "@expo/vector-icons"
+import {NotificationToggle} from "../reusableComponents/NotificationToggle"
 
 export default function ExpensesScreen({navigation}: {navigation: any}) {
   const vacation = [
@@ -56,12 +57,12 @@ export default function ExpensesScreen({navigation}: {navigation: any}) {
           <Text className='font-bold text-lg'>Andrei Florea</Text>
         </TouchableOpacity>
         <View className='flex-row gap-3 justify-center items-center'>
-          <View className=' justify-center items-center bg-white p-3 shadow-2xl rounded-full'>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Settings")}
+            className=' justify-center items-center bg-white p-3 shadow-2xl rounded-full'>
             <Ionicons name='settings-outline' size={20} color={"black"} />
-          </View>
-          <View className=' justify-center items-center bg-white p-3 shadow-2xl rounded-full'>
-            <Ionicons name='notifications-outline' size={20} color={"black"} />
-          </View>
+          </TouchableOpacity>
+          <NotificationToggle />
         </View>
       </View>
       <View className='mx-4 items-start justify-center gap-4 mt-10'>

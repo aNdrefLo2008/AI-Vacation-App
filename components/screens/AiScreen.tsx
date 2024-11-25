@@ -1,18 +1,19 @@
 /** @format */
-/** @format */
 
 import {Ionicons} from "@expo/vector-icons"
 import "../../global.css"
 
-import React from "react"
+import React, {useState} from "react"
 import {
   View,
   Text,
   ScrollView,
   Image,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  Modal
 } from "react-native"
+import {NotificationToggle} from "../reusableComponents/NotificationToggle"
 
 export default function AiScreen({navigation}: {navigation: any}) {
   return (
@@ -29,12 +30,12 @@ export default function AiScreen({navigation}: {navigation: any}) {
             />
           </TouchableOpacity>
           <View className='flex-row gap-3 items-center'>
-            <View className='bg-white p-3 shadow-2xl rounded-full items-center justify-center'>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Settings")}
+              className='bg-white p-3 shadow-2xl rounded-full items-center justify-center'>
               <Ionicons name='settings-outline' size={20} color='black' />
-            </View>
-            <View className='bg-white p-3 shadow-2xl rounded-full items-center justify-center'>
-              <Ionicons name='notifications-outline' size={20} color='black' />
-            </View>
+            </TouchableOpacity>
+            <NotificationToggle />
           </View>
         </View>
         <Text className='font-light text-5xl text-black mb-4 mt-12'>

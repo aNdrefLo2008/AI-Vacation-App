@@ -6,11 +6,13 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs"
 import {Ionicons} from "@expo/vector-icons"
 import {Image, StyleSheet} from "react-native"
 import AiScreen from "../screens/AiScreen"
-import ExpensesScreen from "../screens/ExpensesScreen"
 import AddItenarary from "../screens/AddItenarary"
 import ExpensesStack from "./ExpensesStack"
 import ProfileStack from "./ProfileSettingsStack"
 import DiscoverScreen from "../screens/DiscoverScreen"
+import SettingsScreen from "../screens/SettingsScreen"
+import AIStack from "./AI&SettingsStack"
+import AddItenararyStack from "./AddItenararyStack"
 
 const Tab = createBottomTabNavigator()
 
@@ -38,7 +40,7 @@ export default function BottomTabNavigator() {
       }}>
       <Tab.Screen
         name='AI'
-        component={AiScreen}
+        component={AIStack}
         options={{
           headerShown: false,
           tabBarIcon: ({color, focused}) => (
@@ -70,7 +72,7 @@ export default function BottomTabNavigator() {
       />
       <Tab.Screen
         name=' '
-        component={AddItenarary}
+        component={AddItenararyStack}
         options={{
           headerShown: false,
           tabBarIcon: ({color}) => (

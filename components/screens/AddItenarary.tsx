@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   TextInput
 } from "react-native"
+import {NotificationToggle} from "../reusableComponents/NotificationToggle"
 
 export default function AddItenarary({navigation}: {navigation: any}) {
   return (
@@ -29,12 +30,12 @@ export default function AddItenarary({navigation}: {navigation: any}) {
             />
           </TouchableOpacity>
           <View className='flex-row gap-3 items-center'>
-            <TouchableOpacity className='bg-white p-3 shadow-2xl rounded-full items-center justify-center'>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Settings")}
+              className='bg-white p-3 shadow-2xl rounded-full items-center justify-center'>
               <Ionicons name='settings-outline' size={20} color='black' />
             </TouchableOpacity>
-            <TouchableOpacity className='bg-white p-3 shadow-2xl rounded-full items-center justify-center'>
-              <Ionicons name='notifications-outline' size={20} color='black' />
-            </TouchableOpacity>
+            <NotificationToggle />
           </View>
         </View>
 
