@@ -1,11 +1,36 @@
 /** @format */
 
+import React, {useState, useEffect} from "react"
+
+import AsyncStorage from "@react-native-async-storage/async-storage"
+
 import "../../global.css"
 
 import {ScrollView, Text, View, Image, TouchableOpacity} from "react-native"
 import Ionicons from "@expo/vector-icons/Ionicons"
 
+import {getItineraries, setAuthToken} from "../../apiCalls/iteneraryApi"
+
 export default function ProfileScreen({navigation}: {navigation: any}) {
+  const exampleToken =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczMzE1MTI1NywiZXhwIjoxNzMzMTU0ODU3fQ.FeDBQDM-0TeXDRkSwhvm-5UwbZT5TCoplBjnBmCj_9c"
+  const [itineraries, setItineraries] = useState<any[]>([])
+
+  useEffect(() => {
+    setAuthToken(exampleToken)
+    AsyncStorage.setItem("jwt", exampleToken) // Save token locally
+    fetchItineraries()
+    console.log(itineraries)
+  }, [])
+
+  const fetchItineraries = async () => {
+    try {
+      const data = await getItineraries()
+      setItineraries(data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
   return (
     <ScrollView className='flex-1 pt-10 bg-gray-100'>
       <View className='flex-row items-center justify-between mx-6'>
@@ -41,7 +66,7 @@ export default function ProfileScreen({navigation}: {navigation: any}) {
               source={require("../../assets/images/3 Vacation.jpg")}
             />
             <Text className='text-gray-700 text-start max-w-40'>
-              Resort on Hurawalhi Island, Maldives
+              {itineraries.length > 0 ? itineraries[0].title : "Loading..."}
             </Text>
           </View>
           {/* Second item */}
