@@ -10,17 +10,17 @@ import {ScrollView, Text, View, Image, TouchableOpacity} from "react-native"
 import Ionicons from "@expo/vector-icons/Ionicons"
 
 import {getItineraries, setAuthToken} from "../../apiCalls/iteneraryApi"
+import {useNavigation} from "expo-router"
 
-export default function ProfileScreen({navigation}: {navigation: any}) {
-  const exampleToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczMzE1MTI1NywiZXhwIjoxNzMzMTU0ODU3fQ.FeDBQDM-0TeXDRkSwhvm-5UwbZT5TCoplBjnBmCj_9c"
+export default function ProfileScreen() {
   const [itineraries, setItineraries] = useState<any[]>([])
+  const navigation = useNavigation<any>()
 
   useEffect(() => {
-    setAuthToken(exampleToken)
-    AsyncStorage.setItem("jwt", exampleToken) // Save token locally
+    const token: any = AsyncStorage.getItem("token")
+    setAuthToken(token)
     fetchItineraries()
-    console.log(itineraries)
+    console.log(itineraries, token)
   }, [])
 
   const fetchItineraries = async () => {

@@ -11,8 +11,11 @@ import {
 } from "react-native"
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import {useNavigation} from "expo-router"
 
-const LoginScreen = ({navigation}: {navigation: any}) => {
+const LoginScreen = ({setAuthenticated}: {setAuthenticated: any}) => {
+  const navigation = useNavigation<any>()
+
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
@@ -30,7 +33,8 @@ const LoginScreen = ({navigation}: {navigation: any}) => {
 
       // Store token and navigate to Home
       await AsyncStorage.setItem("token", token)
-      navigation.reset({index: 0, routes: [{name: "home"}]})
+      setAuthenticated(true)
+      console.log(token)
     } catch (error: any) {
       console.log(error)
       Alert.alert(

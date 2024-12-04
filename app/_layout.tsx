@@ -1,24 +1,28 @@
 /** @format */
+
+// _layout.tsx
+
 import React, {useState, useEffect} from "react"
-import {NavigationContainer} from "@react-navigation/native"
-import {createStackNavigator} from "@react-navigation/stack"
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import BottomTabNavigator from "@/components/navigation/BottomTabNavigator"
-import LoginScreen from "@/components/screens/LoginScreen"
-import RegisterScreen from "@/components/screens/RegisterScreen"
-import {NotificationProvider} from "@/components/reusableComponents/NotificationContext"
 import {ActivityIndicator, View} from "react-native"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import {NotificationProvider} from "@/components/reusableComponents/NotificationContext"
+import {navigationRef} from "@/components/navigation/navigate" // Navigation ref
+import {NavigationContainer} from "@react-navigation/native" // Only one NavigationContainer
+import {createStackNavigator} from "@react-navigation/stack" // Stack navigator
+import BottomTabNavigator from "@/components/navigation/BottomTabNavigator" // Your main bottom tabs
+import LoginScreen from "@/components/screens/LoginScreen" // Login screen
+import RegisterScreen from "@/components/screens/RegisterScreen" // Register screen
 
 const Stack = createStackNavigator()
 
-export default function App() {
+export default function Layout() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const checkAuth = async () => {
       const token = await AsyncStorage.getItem("token")
-      setIsAuthenticated(!!token)
+      setIsAuthenticated(!!token) // Check if token exists
       setLoading(false)
     }
 
@@ -34,17 +38,19 @@ export default function App() {
   }
 
   return (
-    <NotificationProvider>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        {!isAuthenticated ? (
-          <>
-            <Stack.Screen name='Login' component={LoginScreen} />
-            <Stack.Screen name='Register' component={RegisterScreen} />
-          </>
-        ) : (
-          <Stack.Screen name='Home' component={BottomTabNavigator} />
-        )}
-      </Stack.Navigator>
-    </NotificationProvider>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      {!isAuthenticated ? (
+        <>
+          <Stack.Screen name='Login'>
+            {(props: any) => (
+              <LoginScreen {...props} setAuthenticated={setIsAuthenticated} />
+            )}
+          </Stack.Screen>
+          <Stack.Screen name='Register' component={RegisterScreen} />
+        </>
+      ) : (
+        <Stack.Screen name='Home' component={BottomTabNavigator} />
+      )}
+    </Stack.Navigator>
   )
 }
