@@ -32,14 +32,13 @@ const LoginScreen = ({setAuthenticated}: {setAuthenticated: any}) => {
       const {token} = response.data
 
       // Store token and navigate to Home
-      await AsyncStorage.setItem("token", token)
+      await AsyncStorage.setItem("newtoken", token)
       setAuthenticated(true)
-      console.log(token)
     } catch (error: any) {
       console.log(error)
       Alert.alert(
         "Login Failed",
-        error.response?.data?.error || "An error occurred."
+        error.response?.data?.error || "Password or Email false"
       )
     }
   }

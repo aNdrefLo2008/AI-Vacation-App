@@ -4,6 +4,7 @@ import { Alert } from "react-native";
 import { useNavigation } from "expo-router";
 
 import { navigationRef } from "@/components/navigation/navigate";
+import { useAuth } from "@/components/reusableComponents/authContext";
 
 const API_URL = "http://192.168.2.39:3000/api"; // Update with your deployed backend URL
 
@@ -29,12 +30,15 @@ export const createItinerary = async (data) => {
 
 
 
-export const getItineraries = async () => {
-  const token = await AsyncStorage.getItem("token");
+export const getItineraries = async ({ isAuthenticated, setIsAuthenticated }) => {
 
-  if (typeof token == "string") {
-    console.log(navigationRef.current)
-    throw new Error("No token found, user is not authenticated");
+  const token = await AsyncStorage.getItem("newtoken");
+  console.log(token)
+
+  if (typeof token !== "string") {
+    setIsAuthenticated(false);
+    Alert.alert("Session Expired", "Please log in again.");
+    throw new Error("Token expired, user needs to log in again.");
   }
 
   try {
