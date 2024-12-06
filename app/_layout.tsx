@@ -17,7 +17,7 @@ import {
 const Stack = createStackNavigator()
 
 const Base = () => {
-  const {isAuthenticated, checkAuth} = useAuth()
+  const {isAuthenticated, setIsAuthenticated} = useAuth()
 
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
@@ -25,7 +25,7 @@ const Base = () => {
         <>
           <Stack.Screen name='Login'>
             {(props: any) => (
-              <LoginScreen {...props} setAuthenticated={checkAuth} />
+              <LoginScreen {...props} setAuthenticated={setIsAuthenticated} />
             )}
           </Stack.Screen>
           <Stack.Screen name='Register' component={RegisterScreen} />

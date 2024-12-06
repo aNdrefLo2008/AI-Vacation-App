@@ -32,12 +32,12 @@ export const createItinerary = async (data) => {
 
 export const getItineraries = async ({ isAuthenticated, setIsAuthenticated }) => {
 
-  const token = await AsyncStorage.getItem("newtoken");
-  console.log(token)
+  const token = await AsyncStorage.getItem("token");
 
   if (typeof token !== "string") {
-    setIsAuthenticated(false);
     Alert.alert("Session Expired", "Please log in again.");
+    console.log(token)
+    setIsAuthenticated(false);
     throw new Error("Token expired, user needs to log in again.");
   }
 
@@ -50,10 +50,9 @@ export const getItineraries = async ({ isAuthenticated, setIsAuthenticated }) =>
     return response.data;
   } catch (error) {
     if (error.response?.status === 401) {
-      // Handle token expiration
       await AsyncStorage.removeItem("token");
       Alert.alert("Session Expired", "Please log in again.");
-      navigationRef.current?.reset({ index: 0, routes: [{ name: "Login" }] });
+      setIsAuthenticated(false);
       throw new Error("Token expired, user needs to log in again.");
     } else {
       console.error("Error fetching itineraries:", error.response ? error.response.data : error);

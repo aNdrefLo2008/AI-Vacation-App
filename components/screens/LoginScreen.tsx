@@ -12,8 +12,10 @@ import {
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import {useNavigation} from "expo-router"
+import {useAuth} from "../reusableComponents/authContext"
 
-const LoginScreen = ({setAuthenticated}: {setAuthenticated: any}) => {
+const LoginScreen = () => {
+  const {isAuthenticated, setIsAuthenticated} = useAuth()
   const navigation = useNavigation<any>()
 
   const [email, setEmail] = useState("")
@@ -32,8 +34,8 @@ const LoginScreen = ({setAuthenticated}: {setAuthenticated: any}) => {
       const {token} = response.data
 
       // Store token and navigate to Home
-      await AsyncStorage.setItem("newtoken", token)
-      setAuthenticated(true)
+      await AsyncStorage.setItem("token", token)
+      setIsAuthenticated(true)
     } catch (error: any) {
       console.log(error)
       Alert.alert(
