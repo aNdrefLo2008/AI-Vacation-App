@@ -46,7 +46,7 @@ export default function ProfileScreen() {
     }
 
     initialize()
-  }, [])
+  }, [isAuthenticated]) // Re-fetch if isAuthenticated state changes
 
   const fetchItineraries = async () => {
     try {
@@ -97,7 +97,7 @@ export default function ProfileScreen() {
 
       {/* Itineraries Section */}
       <View className='bg-white rounded-t-3xl w-screen h-full mt-10 px-5 pb-10'>
-        <Text className='font-light text-3xl mt-10'>My Trips</Text>
+        <Text className='text-3xl mt-10 font-bold'>My Trips</Text>
 
         <View className='flex-wrap flex-row flex-1 items-start justify-center gap-8 mt-6 mb-32'>
           {/* Dynamic Itineraries */}
@@ -108,7 +108,7 @@ export default function ProfileScreen() {
                   className='bg-cover rounded-3xl w-44 h-40'
                   source={imagePaths[index % imagePaths.length]} // Replace with dynamic images if available
                 />
-                <Text className='text-gray-700 text-start max-w-40'>
+                <Text className='text-gray-700 text-start max-w-40 font-bold'>
                   {itinerary.title}
                 </Text>
               </View>
