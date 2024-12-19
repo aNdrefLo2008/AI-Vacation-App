@@ -2,47 +2,70 @@
 
 import "../../global.css"
 
-import React from "react"
-import {View, Text, ScrollView, Image, TouchableOpacity} from "react-native"
-import {Ionicons, FontAwesome} from "@expo/vector-icons"
+import React, {useState, useEffect} from "react"
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  ActivityIndicator
+} from "react-native"
+import {Ionicons} from "@expo/vector-icons"
 import {NotificationToggle} from "../reusableComponents/NotificationToggle"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import {getItineraries, setAuthToken} from "../../apiCalls/iteneraryApi"
+import {useAuth} from "../reusableComponents/authContext"
 
 export default function ExpensesScreen({navigation}: {navigation: any}) {
-  const vacation = [
-    {
-      destination: "Maldives",
-      nights: 2,
-      cost: {
-        total: 500,
-        housing: 250,
-        food: 75,
-        partying: 75,
-        activities: 100
-      }
-    },
-    {
-      destination: "Portofino",
-      nights: 14,
-      cost: {
-        total: 3000,
-        housing: 500,
-        food: 1000,
-        partying: 700,
-        activities: 800
-      }
-    },
-    {
-      destination: "Monaco",
-      nights: 12,
-      cost: {
-        total: 2200,
-        housing: 500,
-        food: 200,
-        partying: 300,
-        activities: 1200
+  const imagePaths = [
+    require("../../assets/images/1 Vacation.jpg"),
+    require("../../assets/images/2 Vacation.jpg"),
+    require("../../assets/images/3 Vacation.jpg"),
+    require("../../assets/images/4 Vacation.jpg")
+  ]
+  const {isAuthenticated, setIsAuthenticated} = useAuth()
+  const [itineraries, setItineraries] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const initialize = async () => {
+      try {
+        const token = await AsyncStorage.getItem("token")
+        if (token) {
+          setAuthToken(token)
+          const data = await fetchItineraries()
+          setItineraries(data || [])
+        } else {
+          setIsAuthenticated(false)
+        }
+      } catch (error) {
+        console.error("Error initializing expenses screen:", error)
+      } finally {
+        setLoading(false)
       }
     }
-  ]
+
+    initialize()
+  }, [isAuthenticated]) // Re-fetch if isAuthenticated state changes
+
+  const fetchItineraries = async () => {
+    try {
+      const data = await getItineraries({isAuthenticated, setIsAuthenticated})
+      return data
+    } catch (error) {
+      console.error("Error fetching itineraries:", error)
+      return []
+    }
+  }
+
+  if (loading) {
+    return (
+      <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+        <ActivityIndicator size='large' color='#0000ff' />
+      </View>
+    )
+  }
 
   return (
     <ScrollView className='flex-1 mt-10 bg-gray-100 mb-20'>
@@ -54,6 +77,7 @@ export default function ExpensesScreen({navigation}: {navigation: any}) {
             className='bg-cover rounded-full w-12 h-12'
             source={require("../../assets/images/Profile Picture.jpg")}
           />
+
           <Text className='font-bold text-lg'>Andrei Florea</Text>
         </TouchableOpacity>
         <View className='flex-row gap-3 justify-center items-center'>
@@ -65,6 +89,7 @@ export default function ExpensesScreen({navigation}: {navigation: any}) {
           <NotificationToggle />
         </View>
       </View>
+
       <View className='mx-4 items-start justify-center gap-4 mt-10'>
         <Text className=' text-gray-500 text-sm font-medium'>
           Spent on last vacation
@@ -74,7 +99,7 @@ export default function ExpensesScreen({navigation}: {navigation: any}) {
 
       <View className='mx-4 flex-row flex-1 overflow-x-visible items-center justify-center gap-1 mt-10'>
         <TouchableOpacity
-          onPress={() => navigation.navigate("AI", vacation[0])}
+          onPress={() => navigation.navigate("AI", itineraries[0])}
           className='flex-1 flex-row justify-center items-center gap-3 rounded-2xl bg-black py-4'>
           <Text className='text-white text-xl font-bold'>
             How to save on vacation
@@ -88,60 +113,47 @@ export default function ExpensesScreen({navigation}: {navigation: any}) {
           <Text className='text-lg font-bold'>Vacations</Text>
           <Text className='text-lg font-bold text-indigo-600'>View All</Text>
         </View>
-        <Text className='font-extralight mt-4'>Last 6 Month</Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("VacationDetail", vacation[0])}
-          className='mt-3 border border-gray-200 rounded-3xl p-4 flex-row justify-between items-center'>
-          <View className='flex-row gap-3 items-center justify-center'>
-            <Image
-              className='bg-cover rounded-full w-16 h-16 shadow-2xl'
-              source={require("../../assets/images/2 Vacation.jpg")}
-            />
-            <View>
-              <Text className='font-bold text-lg'>Maldives</Text>
-              <Text className='font-thin'>2 Nights</Text>
-            </View>
-          </View>
-          <View>
-            <Text className='font-bold text-lg'>$500</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => navigation.navigate("VacationDetail", vacation[1])}
-          className=' mt-3 border border-gray-200 rounded-3xl p-3 flex-row justify-between items-center'>
-          <View className='flex-row gap-3 items-center justify-center'>
-            <Image
-              className='bg-cover rounded-full w-16 h-16 shadow-2xl'
-              source={require("../../assets/images/1 Vacation.jpg")}
-            />
-            <View className='flex-col justify-center items-center'>
-              <Text className='font-bold text-lg'>Portofino</Text>
-              <Text className='font-light'>14 Nights</Text>
-            </View>
-          </View>
-          <View>
-            <Text className='font-bold text-lg'>$3000</Text>
-          </View>
-        </TouchableOpacity>
         <Text className='font-extralight mt-4'>Last Year</Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("VacationDetail", vacation[2])}
-          className=' mt-3 border border-gray-200 rounded-3xl p-3 flex-row justify-between items-center'>
-          <View className='flex-row gap-3 items-center justify-center'>
-            <Image
-              className='bg-cover rounded-full w-16 h-16 shadow-2xl'
-              source={require("../../assets/images/3 Vacation.jpg")}
-            />
-            <View className='flex-col justify-center items-center'>
-              <Text className='font-bold text-lg'>Monaco</Text>
-              <Text className='font-light'>12 Nights</Text>
-            </View>
-          </View>
-          <View>
-            <Text className='font-bold text-lg'>$2200</Text>
-          </View>
-        </TouchableOpacity>
+
+        {/* Render itineraries dynamically */}
+        {itineraries.map((itinerary, index) => {
+          // Calculate the number of nights based on the date difference
+          const startDate = new Date(itinerary.startDate)
+          const endDate = new Date(itinerary.endDate)
+          const nights = Math.max(
+            Math.ceil(
+              (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+            ),
+            0 // Ensure non-negative nights
+          )
+
+          return (
+            <TouchableOpacity
+              key={index}
+              onPress={() => navigation.navigate("VacationDetail", itinerary)}
+              className='mt-3 border border-gray-200 rounded-3xl p-4 flex-row justify-between items-center'>
+              <View className='flex-row gap-3 items-center justify-center'>
+                <Image
+                  className='bg-cover rounded-full w-16 h-16 shadow-2xl'
+                  source={imagePaths[index % imagePaths.length]}
+                />
+                <View>
+                  <Text className='font-bold text-lg'>{itinerary.title}</Text>
+                  <Text className='font-thin'>{nights} Nights</Text>
+                </View>
+              </View>
+              <View>
+                <Text className='font-bold text-lg'>${itinerary.cost}</Text>
+              </View>
+            </TouchableOpacity>
+          )
+        })}
+
+        {itineraries.length === 0 && (
+          <Text className='text-gray-500 text-center mt-4'>
+            No itineraries available.
+          </Text>
+        )}
       </View>
     </ScrollView>
   )
