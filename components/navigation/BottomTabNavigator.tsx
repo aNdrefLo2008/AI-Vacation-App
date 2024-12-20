@@ -13,6 +13,7 @@ import DiscoverScreen from "../screens/DiscoverScreen"
 import SettingsScreen from "../screens/SettingsScreen"
 import AIStack from "./AI&SettingsStack"
 import AddItenararyStack from "./AddItenararyStack"
+import DiscoverLocationStack from "./DiscoverLocationStack"
 
 const Tab = createBottomTabNavigator()
 
@@ -56,7 +57,7 @@ export default function BottomTabNavigator() {
       />
       <Tab.Screen
         name='Discover'
-        component={DiscoverScreen}
+        component={DiscoverLocationStack}
         options={{
           headerShown: false,
           tabBarIcon: ({color, focused}) => (

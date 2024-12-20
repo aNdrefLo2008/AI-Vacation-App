@@ -1,16 +1,20 @@
 /** @format */
 
-import React from "react"
+import React, {useEffect} from "react"
 import {View, Text, Dimensions} from "react-native"
 import {PieChart} from "react-native-chart-kit"
 import {Ionicons} from "@expo/vector-icons"
 import {ScrollView} from "react-native-gesture-handler"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const screenWidth = Dimensions.get("window").width
 const halfScreenWidthPadding = screenWidth / 4
 
 export default function VacationDetailScreen({route}: {route: any}) {
   const {title, cost, expenses} = route.params
+
+  const token = AsyncStorage.getItem("token")
+  console.log(token)
 
   // Check if expenses are available
   const expenseData = expenses && expenses.length > 0 ? expenses : []

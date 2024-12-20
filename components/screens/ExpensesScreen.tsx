@@ -117,14 +117,13 @@ export default function ExpensesScreen({navigation}: {navigation: any}) {
 
         {/* Render itineraries dynamically */}
         {itineraries.map((itinerary, index) => {
-          // Calculate the number of nights based on the date difference
           const startDate = new Date(itinerary.startDate)
           const endDate = new Date(itinerary.endDate)
           const nights = Math.max(
             Math.ceil(
               (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
             ),
-            0 // Ensure non-negative nights
+            0
           )
 
           return (
