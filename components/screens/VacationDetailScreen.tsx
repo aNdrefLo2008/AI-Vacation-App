@@ -14,7 +14,6 @@ export default function VacationDetailScreen({route}: {route: any}) {
   const {title, cost, expenses} = route.params
 
   const token = AsyncStorage.getItem("token")
-  console.log(token)
 
   // Check if expenses are available
   const expenseData = expenses && expenses.length > 0 ? expenses : []

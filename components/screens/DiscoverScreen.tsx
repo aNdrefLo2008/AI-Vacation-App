@@ -17,6 +17,7 @@ import Feather from "@expo/vector-icons/Feather"
 import AntDesign from "@expo/vector-icons/AntDesign"
 import {useEffect, useState} from "react"
 import axios from "axios"
+import truncateAddress from "../reusableComponents/truncateAdress"
 
 export default function DiscoverScreen({navigation}: {navigation: any}) {
   const API_URL = "http://192.168.2.39:3000/api/locations"
@@ -57,16 +58,13 @@ export default function DiscoverScreen({navigation}: {navigation: any}) {
   }
 
   // Component to render each location card
-  const LocationCard = ({name, image, address, category}: any) => {
+  const LocationCard = ({name, image, address, category, location}: any) => {
     // Function to truncate the address to a maximum of two or three words
-    const truncateAddress = (address: string) => {
-      const words = address.split(" ") // Split address into words
-      const truncatedAddress = words.slice(0, 3).join(" ") // Get first 3 words
-      return truncatedAddress
-    }
 
     return (
-      <View className='relative justify-center items-center bg-white p-3 rounded-3xl max-w-[262px] h-[262px]'>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Location", {location})}
+        className='relative justify-center items-center bg-white p-3 rounded-3xl max-w-[262px] h-[262px]'>
         <Image
           className='bg-cover rounded-3xl w-72 h-72 mx-20'
           source={{uri: image}}
@@ -93,7 +91,7 @@ export default function DiscoverScreen({navigation}: {navigation: any}) {
             </View>
           </BlurView>
         </View>
-      </View>
+      </TouchableOpacity>
     )
   }
 
@@ -152,6 +150,7 @@ export default function DiscoverScreen({navigation}: {navigation: any}) {
         <View className='flex-row space-x-4 gap-10'>
           {locations.map((location) => (
             <LocationCard
+              location={location}
               key={location.id}
               name={location.name}
               image={location.image}

@@ -6,6 +6,7 @@ import SettingsScreen from "../screens/SettingsScreen"
 import AddItenarary from "../screens/AddItenarary"
 import ProfileSettingsScreen from "../screens/ProfileSettingsScreen"
 import DiscoverScreen from "../screens/DiscoverScreen"
+import LocationDetails from "../screens/LocationDetails"
 
 const Stack = createStackNavigator()
 
@@ -19,8 +20,8 @@ export default function DiscoverLocationStack() {
       />
       <Stack.Screen
         name='Location'
-        component={DiscoverScreen}
-        options={{title: "Location Details"}}
+        component={LocationDetails}
+        options={{title: "Location Details", headerShown: false}}
       />
     </Stack.Navigator>
   )
