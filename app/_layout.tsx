@@ -13,6 +13,7 @@ import {
   AuthProvider,
   useAuth
 } from "@/components/reusableComponents/authContext"
+import {NotificationProvider} from "@/components/reusableComponents/NotificationContext"
 
 const Stack = createStackNavigator()
 
@@ -39,8 +40,10 @@ const Base = () => {
 
 export default function Layout() {
   return (
-    <AuthProvider>
-      <Base />
-    </AuthProvider>
+    <NotificationProvider>
+      <AuthProvider>
+        <Base />
+      </AuthProvider>
+    </NotificationProvider>
   )
 }

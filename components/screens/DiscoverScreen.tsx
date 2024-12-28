@@ -20,15 +20,26 @@ import axios from "axios"
 import truncateAddress from "../reusableComponents/truncateAdress"
 
 export default function DiscoverScreen({navigation}: {navigation: any}) {
+  const seasonImages = [
+    {name: "autumn", image: require("../../assets/images/autumn.jpg")},
+    {name: "winter", image: require("../../assets/images/Winter.jpg")},
+    {name: "spring", image: require("../../assets/images/spring.jpg")},
+    {name: "summer", image: require("../../assets/images/2 Vacation.jpg")}
+  ]
+
   const API_URL = "http://192.168.2.39:3000/api/locations"
   const [locations, setLocations] = useState<any[]>([])
+  const [filteredLocations, setFilteredLocations] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [selectedSeason, setSelectedSeason] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState<string>("")
 
   useEffect(() => {
     const initialize = async () => {
       try {
-        const data = await fetchLocations()
+        const data = await fetchLocations(selectedSeason)
         setLocations(data || [])
+        setFilteredLocations(data || [])
       } catch (error) {
         console.error("Error initializing profile screen:", error)
       } finally {
@@ -37,17 +48,39 @@ export default function DiscoverScreen({navigation}: {navigation: any}) {
     }
 
     initialize()
-  }, [])
+  }, [selectedSeason])
 
-  const fetchLocations = async () => {
+  // Fetch locations based on season
+  const fetchLocations = async (season: string | null) => {
     try {
       const response = await axios.get(API_URL)
+      if (season) {
+        if (season === "all") {
+          return response.data
+        }
+        return response.data.filter(
+          (location: any) =>
+            location.category.toLowerCase() === season.toLowerCase()
+        )
+      }
       return response.data
     } catch (error) {
       console.error("Error fetching locations:", error)
       return []
     }
   }
+
+  // Filter locations based on search query
+  useEffect(() => {
+    const lowercasedQuery = searchQuery.toLowerCase()
+    const results = locations.filter(
+      (location) =>
+        location.name.toLowerCase().includes(lowercasedQuery) ||
+        location.address.toLowerCase().includes(lowercasedQuery) ||
+        location.category.toLowerCase().includes(lowercasedQuery)
+    )
+    setFilteredLocations(results)
+  }, [searchQuery, locations])
 
   if (loading) {
     return (
@@ -59,8 +92,6 @@ export default function DiscoverScreen({navigation}: {navigation: any}) {
 
   // Component to render each location card
   const LocationCard = ({name, image, address, category, location}: any) => {
-    // Function to truncate the address to a maximum of two or three words
-
     return (
       <TouchableOpacity
         onPress={() => navigation.navigate("Location", {location})}
@@ -114,33 +145,25 @@ export default function DiscoverScreen({navigation}: {navigation: any}) {
 
       <View className='flex-row px-6 py-4 mx-8 rounded-lg shadow-2xl shadow-black bg-white justify-between items-center '>
         <View className='flex-row gap-6 items-center'>
-          <FontAwesome name='search' size={24} color='black' />
+          <TouchableOpacity onPress={() => setSearchQuery}>
+            <FontAwesome name='search' size={24} color='black' />
+          </TouchableOpacity>
+
           <TextInput
             className='text-xl text-black'
             placeholder='Discover a location'
             placeholderTextColor='#A8A8A8'
             selectionColor='black'
+            value={searchQuery}
+            onChangeText={setSearchQuery}
           />
         </View>
-        <Ionicons name='filter' size={24} color='black' />
+        <TouchableOpacity onPress={() => setSearchQuery}>
+          <Ionicons name='filter' size={24} color='black' />
+        </TouchableOpacity>
       </View>
 
       <Text className='font-bold text-2xl mt-8 mx-4 ml-8'>Explore Cities</Text>
-
-      {/* Displaying the locations */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        className='flex-1 mt-4 mb-6 bg-gray-100'
-        contentContainerStyle={{paddingHorizontal: 16}}>
-        <View className='flex-row gap-12 mx-6'>
-          <Text className='text-xl font-medium text-gray-300'>All</Text>
-          <Text className='text-xl font-medium text-black'>Popular</Text>
-          <Text className='text-xl font-medium text-gray-300'>Recommended</Text>
-          <Text className='text-xl font-medium text-gray-300'>Most Viewed</Text>
-          <Text className='text-xl font-medium text-gray-300'>5 Stars</Text>
-        </View>
-      </ScrollView>
 
       <ScrollView
         horizontal
@@ -148,7 +171,7 @@ export default function DiscoverScreen({navigation}: {navigation: any}) {
         className='flex-1 bg-gray-100'
         contentContainerStyle={{paddingHorizontal: 16}}>
         <View className='flex-row space-x-4 gap-10'>
-          {locations.map((location) => (
+          {filteredLocations.map((location) => (
             <LocationCard
               location={location}
               key={location.id}
@@ -161,33 +184,34 @@ export default function DiscoverScreen({navigation}: {navigation: any}) {
         </View>
       </ScrollView>
 
-      {/* Categories Section */}
       <View className='mt-12 mx-6 flex-row justify-between'>
         <Text className='text-2xl font-bold'>Categories</Text>
-        <View className='flex-row gap-1 items-center'>
+        <TouchableOpacity
+          onPress={() => setSelectedSeason("all")}
+          className='flex-row gap-1 items-center'>
           <Text className='text-xl text-gray-400'>See all</Text>
           <AntDesign name='right' size={18} color='#9ca3af' />
-        </View>
+        </TouchableOpacity>
       </View>
 
-      {/* Seasonal Categories Section */}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         className='flex-1 mt-6 mb-12 bg-gray-100'>
         <View className='flex-row gap-4 mx-6'>
-          {["autumn", "winter", "spring", "summer"].map((season) => (
-            <View
-              key={season}
+          {seasonImages.map((season, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => setSelectedSeason(season.name)}
               className='gap-2 bg-white w-40 h-40 rounded-3xl justify-between p-2 items-center'>
               <Image
                 className='bg-cover rounded-3xl w-36 h-28'
-                source={require(`../../assets/images/4 Vacation.jpg`)}
+                source={season.image}
               />
               <Text className='text-black font-bold'>
-                {season.charAt(0).toUpperCase() + season.slice(1)}
+                {season.name.charAt(0).toUpperCase() + season.name.slice(1)}
               </Text>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       </ScrollView>

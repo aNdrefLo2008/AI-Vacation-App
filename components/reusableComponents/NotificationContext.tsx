@@ -1,35 +1,44 @@
 /** @format */
 
-import React, {createContext, useState, useContext} from "react"
+import React, {createContext, useContext, useState, ReactNode} from "react"
 
-// Define the context
-const NotificationContext = createContext<{
+// Define the shape of the context
+interface NotificationContextType {
   notificationsEnabled: boolean
+  setNotificationsEnabled: (enabled: boolean) => void
   toggleNotifications: () => void
-}>({
-  notificationsEnabled: true,
-  toggleNotifications: () => {}
-})
+}
 
-// Provider component
-export const NotificationProvider = ({
-  children
-}: {
-  children: React.ReactNode
-}) => {
-  const [notificationsEnabled, setNotificationsEnabled] = useState(true)
+// Create the context
+const NotificationContext = createContext<NotificationContextType | undefined>(
+  undefined
+)
 
-  const toggleNotifications = () => {
-    setNotificationsEnabled((prev) => !prev)
-  }
+// Provide the context
+export const NotificationProvider = ({children}: {children: ReactNode}) => {
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false)
+
+  const toggleNotifications = () => setNotificationsEnabled((prev) => !prev)
 
   return (
     <NotificationContext.Provider
-      value={{notificationsEnabled, toggleNotifications}}>
+      value={{
+        notificationsEnabled,
+        setNotificationsEnabled,
+        toggleNotifications
+      }}>
       {children}
     </NotificationContext.Provider>
   )
 }
 
-// Hook to use the context
-export const useNotification = () => useContext(NotificationContext)
+// Hook to use the notification context
+export const useNotification = (): NotificationContextType => {
+  const context = useContext(NotificationContext)
+  if (!context) {
+    throw new Error(
+      "useNotification must be used within a NotificationProvider"
+    )
+  }
+  return context
+}

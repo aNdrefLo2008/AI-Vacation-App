@@ -1,9 +1,7 @@
 /** @format */
-
 import {Ionicons} from "@expo/vector-icons"
 import "../../global.css"
-
-import React, {useState, useRef} from "react"
+import React, {useRef} from "react"
 import {
   View,
   Text,
@@ -13,63 +11,12 @@ import {
   Animated,
   TouchableWithoutFeedback
 } from "react-native"
-
-const CustomSwitch = ({
-  value,
-  onValueChange
-}: {
-  value: any
-  onValueChange: any
-}) => {
-  const animation = useRef(new Animated.Value(value ? 1 : 0)).current
-
-  const toggleSwitch = () => {
-    Animated.timing(animation, {
-      toValue: value ? 0 : 1,
-      duration: 350,
-      useNativeDriver: false
-    }).start(() => onValueChange(!value))
-  }
-
-  const translateX = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [2, 22] // Adjust padding/movement
-  })
-
-  const backgroundColor = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["#d3d3d3", "#000000"] // Gray shades for background
-  })
-
-  return (
-    <TouchableWithoutFeedback onPress={toggleSwitch}>
-      <Animated.View
-        style={{
-          width: 50,
-          height: 26, // Slightly increased height for more padding
-          borderRadius: 13, // Half of the new height for proper rounding
-          backgroundColor: backgroundColor,
-          justifyContent: "center",
-          paddingVertical: 6, // Increased vertical padding
-          paddingHorizontal: 4 // Retaining horizontal padding
-        }}>
-        <Animated.View
-          style={{
-            width: 20,
-            height: 20,
-            borderRadius: 10,
-            backgroundColor: "#ffffff", // White ball
-            transform: [{translateX}]
-          }}
-        />
-      </Animated.View>
-    </TouchableWithoutFeedback>
-  )
-}
+import {useNotification} from "../reusableComponents/NotificationContext"
+import CustomSwitch from "../reusableComponents/CustomSwitch"
 
 export default function SettingsScreen({navigation}: {navigation: any}) {
-  const [notificationsEnabled, setNotificationsEnabled] = useState(false)
-  const [darkThemeEnabled, setDarkThemeEnabled] = useState(false)
+  const {notificationsEnabled, toggleNotifications} = useNotification()
+  const [darkThemeEnabled, setDarkThemeEnabled] = React.useState(false)
 
   return (
     <ScrollView className='flex-1 bg-gray-100'>
@@ -153,7 +100,7 @@ export default function SettingsScreen({navigation}: {navigation: any}) {
           </View>
           <CustomSwitch
             value={notificationsEnabled}
-            onValueChange={setNotificationsEnabled}
+            onValueChange={toggleNotifications}
           />
         </View>
         {/* Theme */}
@@ -169,7 +116,9 @@ export default function SettingsScreen({navigation}: {navigation: any}) {
           </View>
           <CustomSwitch
             value={darkThemeEnabled}
-            onValueChange={setDarkThemeEnabled}
+            onValueChange={() =>
+              setDarkThemeEnabled((prev) => !prev)
+            } /* Local State Management */
           />
         </View>
         <TouchableOpacity className='flex-row items-start mt-10 justify-between w-full'>
